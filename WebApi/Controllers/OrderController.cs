@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
@@ -6,34 +7,75 @@ namespace WebApi.Controllers
     [ApiController]
     public class OrderController : Controller
     {
+        private readonly OrderService orderService;
+
+        public OrderController(OrderService orderService) 
+        {
+            this.orderService = orderService;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                return Ok(orderService);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpGet("{id}")]
         public IActionResult ById(int id)
         {
-            return View();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpPost]
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id)
         {
-            return View();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
     }
 }

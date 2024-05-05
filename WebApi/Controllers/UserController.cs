@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.DTO;
+using Application.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
@@ -6,34 +8,64 @@ namespace WebApi.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        private readonly UserService _userService;
+
+        public UserController(UserService userService) 
         {
-            return View();
+            _userService = userService;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult ById(int id)
+        [HttpGet("{email}")]
+        public IActionResult ById(string email)
         {
-            return View();
+            try
+            {
+                return Ok(_userService.GetByEmail(email));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public IActionResult Create([FromBody] UserDTO user)
         {
-            return View();
+            try
+            {
+                return Ok(_userService.Create(user));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id)
+        public IActionResult Update([FromBody] UserDTO user ,int id)
         {
-            return View();
+            try
+            {
+                return Ok(_userService.Update(user, id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                _userService.Delete(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
         }
     }
 }

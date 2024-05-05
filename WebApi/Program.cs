@@ -16,10 +16,12 @@ builder.Services.AddSwaggerGen();
 // Injection dependenci of Services
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<UserService>();
 
 // Injection dependenci of Repositorys
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 string DbConectionString = builder.Configuration.GetConnectionString("DbConnectionsString") ?? "";
 

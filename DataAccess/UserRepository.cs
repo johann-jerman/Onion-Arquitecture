@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.IRepositorys;
 using Configuration;
 using Domain;
 using System;
@@ -9,36 +10,48 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly Context _context;
 
         public UserRepository(Context context) { this._context = context; }
 
-        public User Create(/*dto*/)
+        public User Create(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            User newUser = new(){
+                Username = userDTO.Username,
+                Email = userDTO.Email,
+                Password = userDTO.Password,
+            };
+            _context.Users.Add(newUser);
+            //_context.SaveChanges();
+            return newUser;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
-
+            User user = _context.Users.SingleOrDefault(u => u.Id == id)
+                ?? throw new KeyNotFoundException("No existe elemento con ese id");
+            user.DeletedAt = DateTime.Now;
+            _context.SaveChanges();
+            return;
         }
 
-        public IEnumerable<User> GetAll()
+        public User GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _context.Users.SingleOrDefault(u => u.Email == email)
+                ?? throw new KeyNotFoundException("No existe elemento con ese id");
         }
 
-        public User GetById(int id)
+        public User Update(UserDTO userDTO ,int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public User Update(/*dto*/ int id)
-        {
-            throw new NotImplementedException();
+            User user = _context.Users.SingleOrDefault(u => u.Id == id) 
+                ?? throw new KeyNotFoundException("No existe elemento con ese id");
+            user.Username = userDTO.Username;
+            user.Email = userDTO.Email;
+            user.Password = userDTO.Password;
+            _context.SaveChanges();
+            return user;
         }
     }
 }
