@@ -1,4 +1,5 @@
-﻿using Application.Service;
+﻿using Application.DTO;
+using Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -19,7 +20,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok(orderService);
+                return Ok(orderService.Get());
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -31,7 +32,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                return Ok(orderService.GetById(id));
             }
             catch (Exception ex)
             {
@@ -40,11 +41,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public IActionResult Create([FromBody] OrderDTO order)
         {
             try
             {
-                return Ok();
+                return Ok(orderService.Create(order));
             }
             catch (Exception ex)
             {
@@ -53,11 +54,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id)
+        public IActionResult Update([FromBody] OrderDTO order ,int id)
         {
             try
             {
-                return Ok();
+                return Ok(orderService.Update(order, id));
             }
             catch (Exception ex)
             {
@@ -70,7 +71,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                orderService.Delete(id);
+                return NoContent();
             }
             catch (Exception ex)
             {

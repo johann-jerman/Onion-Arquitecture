@@ -50,6 +50,17 @@ namespace Configuration
                     CategoryId = 3
                 }
             );
+            // DONT DO THIS ITS INSECURE
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "jhon",
+                    Email = "j@j.com",
+                    Password = "1234",
+                }
+            );
+
         }
     }
 }
