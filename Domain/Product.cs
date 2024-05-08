@@ -23,7 +23,8 @@ namespace Domain
         public Category Category { get; set; }
 
         //relation with order from pivot
-        //public ICollection<OrderProduct>? OrderProducts { get; set; }
+        //public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<OrderProducts> Order { get; set; } = new List<OrderProducts>();
 
         public DateTime? CreatedAt { get; set; }
 

@@ -1,6 +1,9 @@
 ﻿using Application.DTO;
 using Application.Service;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace WebApi.Controllers
 {
@@ -9,10 +12,12 @@ namespace WebApi.Controllers
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
+        private readonly OrderProductService orderProductService;
 
-        public OrderController(OrderService orderService) 
+        public OrderController(OrderService orderService, OrderProductService orderProductService) 
         {
             this.orderService = orderService;
+            this.orderProductService = orderProductService;
         }
 
         [HttpGet]
@@ -78,6 +83,35 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ex.Message);
             };
+        }
+
+        [HttpPost("add-product")]
+        public IActionResult AddProduct([FromBody] OrderProductDTO orderProduct) 
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                Order order = orderProductService.AddProduct(orderProduct);
+                string serializedOrder = JsonSerializer.Serialize(order, options);
+                return Ok(order);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("delete-product/{id}")]
+        public IActionResult DeleteProduct(int id)
+        {
+            try
+            {
+                orderProductService.DeleteProduct(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

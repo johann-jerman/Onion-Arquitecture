@@ -16,7 +16,8 @@ namespace Domain
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        //public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<OrderProducts> Product { get; set; } = new List<OrderProducts>();
 
         public DateTime CreatedAt{ get; set; }
 

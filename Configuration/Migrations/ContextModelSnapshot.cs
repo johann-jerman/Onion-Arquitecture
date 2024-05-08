@@ -46,7 +46,7 @@ namespace Configuration.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(3685),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "food",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -54,7 +54,7 @@ namespace Configuration.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(3699),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "smartphone",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -62,7 +62,7 @@ namespace Configuration.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(3700),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "book",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -70,7 +70,7 @@ namespace Configuration.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(3701),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "entertainment",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -107,9 +107,21 @@ namespace Configuration.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(4135),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "orden N°1",
+                            TotalAmount = 0,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        });
                 });
 
-            modelBuilder.Entity("Domain.OrderProduct", b =>
+            modelBuilder.Entity("Domain.OrderProducts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +139,7 @@ namespace Configuration.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("Domain.Product", b =>
@@ -169,6 +181,7 @@ namespace Configuration.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(3920),
                             Description = "Burger with chees",
                             Name = "Burger",
                             Price = 5
@@ -177,6 +190,7 @@ namespace Configuration.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(4095),
                             Description = "Sansung Smarthphone",
                             Name = "Galaxy s20",
                             Price = 1000
@@ -185,6 +199,7 @@ namespace Configuration.Migrations
                         {
                             Id = 3,
                             CategoryId = 3,
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(4096),
                             Description = "Inio Asano Manga",
                             Name = "Oyasumi PumPum",
                             Price = 15
@@ -226,6 +241,18 @@ namespace Configuration.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 5, 8, 17, 56, 30, 985, DateTimeKind.Local).AddTicks(4115),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "j@j.com",
+                            Password = "1234",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "jhon"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Order", b =>
@@ -239,16 +266,16 @@ namespace Configuration.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.OrderProduct", b =>
+            modelBuilder.Entity("Domain.OrderProducts", b =>
                 {
                     b.HasOne("Domain.Order", "Order")
-                        .WithMany("OrderProducts")
+                        .WithMany("Product")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Product", "Product")
-                        .WithMany()
+                        .WithMany("Order")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -283,7 +310,12 @@ namespace Configuration.Migrations
 
             modelBuilder.Entity("Domain.Order", b =>
                 {
-                    b.Navigation("OrderProducts");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Domain.Product", b =>
+                {
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Domain.User", b =>
