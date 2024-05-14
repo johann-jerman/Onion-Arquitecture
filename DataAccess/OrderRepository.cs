@@ -2,6 +2,7 @@
 using Application.IRepositorys;
 using Configuration;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,9 @@ namespace DataAccess
 
         public void Delete(int id)
         {
-            Order order = _context.Orders.SingleOrDefault(o => o.Id == id) 
-                ?? throw new KeyNotFoundException("no existe orden con ese id");
+            Order order = _context.Orders
+                .SingleOrDefault(o => o.Id == id)
+                    ?? throw new KeyNotFoundException("no existe orden con ese id");
             order.DeletedAt = DateTime.Now;
             _context.SaveChanges();
             return;
@@ -48,8 +50,11 @@ namespace DataAccess
 
         public Order GetById(int id)
         {
-            return _context.Orders.SingleOrDefault(o => o.Id == id)
-                ?? throw new KeyNotFoundException("no existe orden con ese id");
+            return _context.Orders
+                .Include(o => o.Product)
+                .Include(o => o.User)
+                .SingleOrDefault(o => o.Id == id)
+                    ?? throw new KeyNotFoundException("no existe orden con ese id");
         }
 
         public Order Update(OrderDTO order, int id)

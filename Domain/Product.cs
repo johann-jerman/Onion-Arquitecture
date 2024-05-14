@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domain
@@ -23,8 +24,9 @@ namespace Domain
         public Category Category { get; set; }
 
         //relation with order from pivot
-        //public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-        public virtual ICollection<OrderProducts> Order { get; set; } = new List<OrderProducts>();
+        //public virtual ICollection<OrderProducts> Order { get; set; } = new List<OrderProducts>();
+        [JsonIgnore]
+        public virtual ICollection<Order> Order { get; set; } = new List<Order>();
 
         public DateTime? CreatedAt { get; set; }
 

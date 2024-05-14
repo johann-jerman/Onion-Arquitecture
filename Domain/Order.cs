@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain
 {
@@ -16,9 +17,8 @@ namespace Domain
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        //public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-        public virtual ICollection<OrderProducts> Product { get; set; } = new List<OrderProducts>();
-
+        //public virtual ICollection<OrderProducts> Product { get; set; } = new List<OrderProducts>();
+        public virtual ICollection<Product> Product { get; set; } = new List<Product>();
         public DateTime CreatedAt{ get; set; }
 
         public DateTime UpdatedAt { get; set;}

@@ -100,12 +100,12 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("delete-product/{id}")]
-        public IActionResult DeleteProduct(int id)
+        [HttpDelete("delete-product/{orderid}/{productid}")]
+        public IActionResult DeleteProduct(int orderid, int productid)
         {
             try
-            {
-                orderProductService.DeleteProduct(id);
+            { 
+                orderProductService.DeleteProduct(orderid, productid);
                 return NoContent();
             }
             catch (Exception ex)
