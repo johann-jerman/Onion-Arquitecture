@@ -27,9 +27,12 @@ namespace DataAccess
                     .Include(o=> o.User)
                     .FirstOrDefault(o => o.Id == orderProduct.OrderId)
                     ?? throw new KeyNotFoundException($"no existe orden con ID: {orderProduct.OrderId}");
-            
+
             Product product = _context.Products.FirstOrDefault(p => p.Id == orderProduct.ProductId)
                 ?? throw new KeyNotFoundException($"no existe producto con ID: {orderProduct.ProductId}");
+
+            if (order.Product.Contains(product)) 
+                throw new Exception($"El producto con id: {orderProduct.ProductId} ya esta asociado a esta orden");
 
             order.Product.Add(product);
             order.TotalAmount += product.Price;
@@ -38,24 +41,17 @@ namespace DataAccess
         }
         public void DeleteProduct(int orderid, int productid)
         {
-            try
-            {
-                Order order = _context.Orders.FirstOrDefault(o => o.Id == orderid)
-                ?? throw new KeyNotFoundException($"no existe orden con ID: {orderid}");
+            Order order = _context.Orders
+                .Include(o => o.Product)
+                .FirstOrDefault(o => o.Id == orderid)
+                    ?? throw new KeyNotFoundException($"no existe orden con ID: {orderid}");
 
-            Product product = _context.Products.FirstOrDefault(o => o.Id == productid)
-                ?? throw new KeyNotFoundException($"no existe orden con ID: {productid}");
-            Console.WriteLine(productid);
-            Console.WriteLine(orderid);
-            
-            order.Product.Remove(product);
-            order.TotalAmount -= product.Price;
+            Product productToRemove = order.Product.FirstOrDefault(p => p.Id == productid)
+                ?? throw new KeyNotFoundException($"no existe producto con id {productid} con relacion a esta orden");
+
+            order.Product.Remove(productToRemove);
+            order.TotalAmount -= productToRemove.Price;
             _context.SaveChanges();
-            } 
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
             return;
         }
     }

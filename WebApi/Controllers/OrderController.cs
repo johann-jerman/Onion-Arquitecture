@@ -4,6 +4,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+//using WebApi.Services;
 
 namespace WebApi.Controllers
 {
@@ -90,9 +91,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var options = new JsonSerializerOptions { WriteIndented = true };
                 Order order = orderProductService.AddProduct(orderProduct);
-                string serializedOrder = JsonSerializer.Serialize(order, options);
+
                 return Ok(order);
             } catch (Exception ex)
             {

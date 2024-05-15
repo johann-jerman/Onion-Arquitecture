@@ -24,8 +24,7 @@ namespace Domain
         public Category Category { get; set; }
 
         //relation with order from pivot
-        //public virtual ICollection<OrderProducts> Order { get; set; } = new List<OrderProducts>();
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual ICollection<Order> Order { get; set; } = new List<Order>();
 
         public DateTime? CreatedAt { get; set; }
