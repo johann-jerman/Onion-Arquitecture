@@ -13,6 +13,18 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Cors", builder =>
+    {
+        builder.AllowAnyMethod(); // -> Dont do that in production
+        //builder.WithMethods("GET","POST", "PUT", "DELETE");
+        builder.AllowAnyOrigin();// -> Dont do that in production
+        //builder.WithOrigins("http://localhost:3000"); -> configure origins -> this can be a service
+        builder.AllowAnyHeader();// -> Dont do that in production
+        //builder.WithHeaders("Authorization", "Content-Type"); -> configure headers
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,6 +69,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//app.UseCors("Cors"); -> enable this for use cors configuration
 
 app.UseAuthorization();
 
