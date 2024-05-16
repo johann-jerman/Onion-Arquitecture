@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Helpers;
 using Application.IRepositorys;
 using Domain;
 using System;
@@ -13,10 +14,14 @@ namespace Application.Service
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository) => _userRepository = userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
         public User Create(UserDTO user)
         {
+            user.Password = HashHelper.Hash(user.Password);
             return _userRepository.Create(user);
         }
 

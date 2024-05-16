@@ -4,6 +4,7 @@ using Application.Service;
 using Application.IRepositorys;
 using DataAccess;
 using System.Text.Json.Serialization;
+using Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<OrderProductService>();
+builder.Services.AddScoped<AuthService>();
 
 // Injection dependenci of Repositorys
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

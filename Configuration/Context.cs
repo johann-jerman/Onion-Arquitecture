@@ -60,11 +60,11 @@ namespace Configuration
                     Id = 1,
                     Username = "jhon",
                     Email = "j@j.com",
-                    Password = "1234",
+                    Password = "6a6b038b18ec06f9db9b368973351372c5f28d9e91f3b6f3c9feca20e9df9eaf", //-> 12334
                     CreatedAt = DateTime.Now,
                 }
             );
-
+            
             modelBuilder.Entity<Order>().HasData(
                 new Order
                 {
