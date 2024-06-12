@@ -6,4 +6,3 @@ TODO:
 	Colas ??
 	Swagger ?? 
 	Radme
-	Cors
