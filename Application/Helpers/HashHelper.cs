@@ -31,17 +31,13 @@ namespace Application.Helpers
 
         public static bool VerifyHash(string inputString, string hash)
         {
-            // Convert the input string to a byte array using ASCII encoding
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] inputBytes = encoding.GetBytes(inputString);
 
-            // Create a SHA256 encoder for hashing
             SHA256 encoderSHA256 = SHA256.Create();
 
-            // Compute the hash of the input string
             byte[] computedHash = encoderSHA256.ComputeHash(inputBytes);
 
-            // Convert the computed hash to a lowercase hexadecimal string
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < computedHash.Length; i++)
             {
@@ -49,7 +45,6 @@ namespace Application.Helpers
             }
             string computedHashString = stringBuilder.ToString().ToLower();
 
-            // Compare the computed hash with the provided hash
             return computedHashString.Equals(hash.ToLower());
         }
     }

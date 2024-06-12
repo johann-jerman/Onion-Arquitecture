@@ -38,6 +38,7 @@ namespace Application.Service
 
         public User Update(UserDTO user, int id)
         {
+            user.Password = HashHelper.Hash(user.Password);
             return _userRepository.Update(user, id);
         }
     }

@@ -1,0 +1,30 @@
+version: "3.4"
+
+services:
+  web: 
+    image: "WebApi"
+    build: .
+    ports: 
+        - "8080:80"
+    depends_on: 
+        - "db"
+    networks:
+        - api-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DbConnectionsString=Server=localhost;Database=cs1;Uid=root;Pwd=admin;
+  db:
+    image: "mysql:latest"
+    environment:
+        MYSQL_ROOT_PASSWORD: "admin"
+        MYSQL_DATABASE: "cs1"
+    ports: 
+        - "3306:3306"
+    volumes:
+        - mysql-data:/var/lib/mysql
+    networks:
+        - api-network
+
+networks:
+  api-network:
+    driver: bridge

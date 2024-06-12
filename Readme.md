@@ -4,5 +4,4 @@ TODO:
 	Validations
 	Crono ??
 	Colas ??
-	Swagger ?? 
 	Radme
