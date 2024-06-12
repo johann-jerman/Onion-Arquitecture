@@ -1,7 +1,9 @@
 ﻿using Application.DTO;
 using Application.Service;
+//using Application.SwaggerExamples;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore;
 
 namespace WebApi.Controllers
 {

@@ -13,6 +13,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+// Cors configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Cors", builder =>
